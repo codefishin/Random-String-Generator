@@ -18,7 +18,7 @@ void toClipboard(HWND hwnd, const std::string& s) {
 		CloseClipboard();
 		return;
 	}
-	memcpy(GlobalLock(hg), s.c_str(), s.size() + 1);
+	memcpy(GlobalLock(hg), s.c_str(), s.size() + 1); // я хз поч жалуется, оно никогда не будет 0
 	GlobalUnlock(hg);
 	SetClipboardData(CF_TEXT, hg);
 	CloseClipboard();
@@ -48,12 +48,12 @@ std::string regen(int limit, int gen)
 	}
 	return keep;
 }
-// chargen and regen are randomizer functions
+// chargen и regen являются функциями для рандомайзера символов
 std::string Randomize()
 {
-	time_t currentTime{}; // data containing current pc time
-	time(&currentTime); // in time format
-	struct tm* myTime = localtime(&currentTime); // time format to struct full of ints
+	time_t currentTime{}; // в коде создаётся переменная, хранящая все данные про текущее время
+	time(&currentTime); // вот, ток тут не в числовом формате
+	struct tm* myTime = localtime(&currentTime); // теперь создаётся int переменная, в которой хранятся данные о времени в числовом формате
 	int limit = myTime->tm_hour + 10;
 	int gen = myTime->tm_sec;
 	std::string str = regen(limit, gen);
